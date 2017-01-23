@@ -359,11 +359,18 @@ public class RationaleDialog extends DialogFragment {
         } else {
 
             returnPossibleCallback(permissionResolveListener, getSmoothPermissions(), buildAnyway());
-
-            if (showSettings) {
-                yesButton.setText("Next");
+            if (smoothPermissions.size() > 1) {
+                if (showSettings) {
+                    yesButton.setText("Next");
+                } else {
+                    yesButton.setText("Continue");
+                }
             } else {
-                yesButton.setText("Continue");
+                if (showSettings) {
+                    yesButton.setText("Settings");
+                } else {
+                    yesButton.setText("Continue");
+                }
             }
         }
 
