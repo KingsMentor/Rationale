@@ -9,7 +9,7 @@ import android.content.pm.PermissionInfo;
  */
 
 public class PermissionDetails {
-    private String description;
+    private String description, permission;
     private int drawableResId;
     private int protectionLevel;
 
@@ -31,6 +31,10 @@ public class PermissionDetails {
         return this;
     }
 
+    public String getPermission() {
+        return this.permission;
+    }
+
     public int getProtectionLevel() {
         return this.protectionLevel;
     }
@@ -41,6 +45,7 @@ public class PermissionDetails {
         try {
             info = pm.getPermissionInfo(permission, PackageManager.GET_META_DATA);
             String text = info.loadDescription(context.getPackageManager()).toString();
+            this.permission = permission;
             this.description = text;
             this.protectionLevel = info.protectionLevel;
             this.drawableResId = permissionDrawableResID;
