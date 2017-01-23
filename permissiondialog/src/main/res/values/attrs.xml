@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <declare-styleable name="gvb">
+        <attr name="bv_primary" format="color" />
+        <attr name="bv_secondary" format="color" />
+
+        <attr name="bv_rationale_state_deny_color" format="color" />
+        <attr name="bv_rationale_state_ignore_color" format="color" />
+        <attr name="bv_rationale_state_visibility" format="boolean" />
+
+
+        <attr name="bv_rationale_text_color_deny" format="color" />
+        <attr name="bv_rationale_text_color_ignore" format="color" />
+        <attr name="bv_rationale_text_font" format="string" />
+        <attr name="bv_rationale_text_size" format="dimension" />
+
+        <attr name="bv_card_corner_radius" format="dimension" />
+
+    </declare-styleable>
+
+
+</resources>

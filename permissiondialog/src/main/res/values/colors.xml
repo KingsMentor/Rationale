@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="secondary_color">#ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="primary_color">#255478</color>
+    <color name="ignore_state">#ED2939</color>
+    <color name="grey">#676767</color>
+    <color name="deny_state">#FF8C00</color>
+
+
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PermissionDialog</string>
+    <string name="rationale_font">Roboto_Light.ttf</string>
+</resources>

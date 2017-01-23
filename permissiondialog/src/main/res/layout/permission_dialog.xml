@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/dialog_card"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="6dp"
+        app:cardCornerRadius="@dimen/card_corner">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/primary"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@color/primary_color">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/permission_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/abc_ic_menu_copy_mtrl_am_alpha" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/secondary"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/permission_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:paddingBottom="8dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp"
+                    android:text="Denied"
+                    android:textColor="@color/ignore_state"
+                    android:textStyle="bold" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/permission_rationale_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:gravity="right"
+                    android:orientation="horizontal"
+                    android:paddingBottom="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/permission_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:text="Not Now"
+                        android:textColor="@color/primary_color" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/permission_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:text="Settings"
+                        android:textColor="@color/primary_color" />
+
+                </android.support.v7.widget.LinearLayoutCompat>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
