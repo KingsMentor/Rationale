@@ -153,7 +153,7 @@ public class RationaleDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        waiting_for_permission = false;
+//        waiting_for_permission = false;
         View view = inflater.inflate(R.layout.rationale_dialog, container, false);
         styleUI(view);
         smoothPermissions = getArguments().getParcelableArrayList(SMOOTH_PERMISSIONS);
@@ -268,7 +268,7 @@ public class RationaleDialog extends DialogFragment {
 
 
     private void loadPermissionPage(Context context) {
-        waiting_for_permission = true;
+//        waiting_for_permission = true;
         Intent intent = new Intent();
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         Uri uri = Uri.fromParts("package", context.getPackageName(), null);
@@ -329,48 +329,45 @@ public class RationaleDialog extends DialogFragment {
         }
     }
 
-    static boolean waiting_for_permission;
 
     @Override
     public void onResume() {
         super.onResume();
-        if (waiting_for_permission) {
 
-            waiting_for_permission = false;
-            // refresh stuff
-            ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
-            showSettings = RationaleDialogBuilder.showSettings(smoothPermissions, buildAnyway());
-            this.smoothPermissions = smoothPermissions;
+        // refresh stuff
+        ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
+        showSettings = RationaleDialogBuilder.showSettings(smoothPermissions, buildAnyway());
+        this.smoothPermissions = smoothPermissions;
 //            setArguments(argument);
 
 
-            permissionRationalePager.setSmoothPermissions(smoothPermissions);
-            permissionRationalePager.notifyDataSetChanged();
-            rationalePager.setAdapter(permissionRationalePager);
+        permissionRationalePager.setSmoothPermissions(smoothPermissions);
+        permissionRationalePager.notifyDataSetChanged();
+        rationalePager.setAdapter(permissionRationalePager);
 
-            if (smoothPermissions.size() == 0) {
-                dismissAllowingStateLoss();
+        if (smoothPermissions.size() == 0) {
+            dismissAllowingStateLoss();
 
-                returnCallback(permissionResolveListener, getSmoothPermissions(), buildAnyway());
+            returnCallback(permissionResolveListener, getSmoothPermissions(), buildAnyway());
 
-                if (showSettings) {
-                    yesButton.setText("Settings");
-                } else {
-                    yesButton.setText("Continue");
-                }
-                //call
+            if (showSettings) {
+                yesButton.setText("Settings");
             } else {
-
-                returnPossibleCallback(permissionResolveListener, getSmoothPermissions(), buildAnyway());
-
-                if (showSettings) {
-                    yesButton.setText("Next");
-                } else {
-                    yesButton.setText("Continue");
-                }
+                yesButton.setText("Continue");
             }
+            //call
+        } else {
 
+            returnPossibleCallback(permissionResolveListener, getSmoothPermissions(), buildAnyway());
+
+            if (showSettings) {
+                yesButton.setText("Next");
+            } else {
+                yesButton.setText("Continue");
+            }
         }
+
+
     }
 
 }
