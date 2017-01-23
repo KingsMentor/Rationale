@@ -18,9 +18,9 @@ public interface RationaleBuilder {
 
         DialogStyle includeStyle(int styleRes);
 
-        void setPermission(SmoothPermission... smoothPermission);
+        PermissionInit setPermission(SmoothPermission... smoothPermission);
 
-        void setPermission(ArrayList<SmoothPermission> smoothPermission);
+        PermissionInit setPermission(ArrayList<SmoothPermission> smoothPermission);
 
     }
 
@@ -29,7 +29,7 @@ public interface RationaleBuilder {
     }
 
     interface PermissionBuild {
-        PermissionDialog build(boolean buildAnyway);
+        RationaleDialog build(boolean buildAnyway);
     }
 
 

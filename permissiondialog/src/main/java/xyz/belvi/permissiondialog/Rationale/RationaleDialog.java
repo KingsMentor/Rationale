@@ -36,7 +36,7 @@ import xyz.belvi.permissiondialog.R;
  * Created by zone2 on 1/19/17.
  */
 
-public class PermissionDialog extends DialogFragment {
+public class RationaleDialog extends DialogFragment {
 
     private ViewPager rationalePager;
     private AppCompatButton noButton, yesButton;
@@ -48,7 +48,7 @@ public class PermissionDialog extends DialogFragment {
     private static PermissionResolveListener permissionResolveListener;
 
 
-    public PermissionDialog initialise(ArrayList<SmoothPermission> smoothPermission, PermissionResolveListener resolveListener, int styleRes, boolean showSettings, boolean buildAnyway) {
+    public RationaleDialog initialise(ArrayList<SmoothPermission> smoothPermission, PermissionResolveListener resolveListener, int styleRes, boolean showSettings, boolean buildAnyway) {
 
         Bundle argument = new Bundle();
         argument.putParcelableArrayList(SMOOTH_PERMISSIONS, smoothPermission);
@@ -154,7 +154,7 @@ public class PermissionDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         waiting_for_permission = false;
-        View view = inflater.inflate(R.layout.permission_dialog, container, false);
+        View view = inflater.inflate(R.layout.rationale_dialog, container, false);
         styleUI(view);
         smoothPermissions = getArguments().getParcelableArrayList(SMOOTH_PERMISSIONS);
         showSettings = getArguments().getBoolean(SHOW_SETTINGS);
@@ -314,7 +314,7 @@ public class PermissionDialog extends DialogFragment {
             permissionResolveListener.onResolved(smoothPermissions);
         else {
             smoothPermissions = new ArrayList<>();
-            PermissionDialogBuilder.showSettings(smoothPermissions, true);
+            RationaleDialogBuilder.showSettings(smoothPermissions, true);
             permissionResolveListener.onResolved(smoothPermissions);
         }
     }
@@ -324,7 +324,7 @@ public class PermissionDialog extends DialogFragment {
             permissionResolveListener.possiblePermissionUpdate(smoothPermissions);
         else {
             smoothPermissions = new ArrayList<>();
-            PermissionDialogBuilder.showSettings(smoothPermissions, true);
+            RationaleDialogBuilder.showSettings(smoothPermissions, true);
             permissionResolveListener.possiblePermissionUpdate(smoothPermissions);
         }
     }
@@ -339,7 +339,7 @@ public class PermissionDialog extends DialogFragment {
             waiting_for_permission = false;
             // refresh stuff
             ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
-            showSettings = PermissionDialogBuilder.showSettings(smoothPermissions, buildAnyway());
+            showSettings = RationaleDialogBuilder.showSettings(smoothPermissions, buildAnyway());
             this.smoothPermissions = smoothPermissions;
 //            setArguments(argument);
 

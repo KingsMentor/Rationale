@@ -17,32 +17,32 @@ import xyz.belvi.permissiondialog.Permission.SmoothPermission;
  * Created by zone2 on 1/20/17.
  */
 
-class PermissionDialogBuilder {
+class RationaleDialogBuilder {
 
     private static ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
     private static Activity mActivity;
     private PermissionResolveListener permissionResolveListener;
 
-    public PermissionDialogBuilder(Activity activity) {
+    public RationaleDialogBuilder(Activity activity) {
         mActivity = activity;
         smoothPermissions = new ArrayList<>();
     }
 
-    public PermissionDialogBuilder addSmoothPermission(SmoothPermission... smoothPermissions) {
+    public RationaleDialogBuilder addSmoothPermission(SmoothPermission... smoothPermissions) {
         for (SmoothPermission smoothPermission : smoothPermissions) {
             this.smoothPermissions.add(smoothPermission);
         }
         return this;
     }
 
-    public PermissionDialogBuilder addSmoothPermission(ArrayList<SmoothPermission> smoothPermissions) {
+    public RationaleDialogBuilder addSmoothPermission(ArrayList<SmoothPermission> smoothPermissions) {
         for (SmoothPermission smoothPermission : smoothPermissions) {
             this.smoothPermissions.add(smoothPermission);
         }
         return this;
     }
 
-    public PermissionDialogBuilder resolvePermission(PermissionResolveListener permissionResolver) {
+    public RationaleDialogBuilder resolvePermission(PermissionResolveListener permissionResolver) {
         permissionResolveListener = permissionResolver;
         return this;
     }
@@ -59,13 +59,13 @@ class PermissionDialogBuilder {
     }
 
 
-    public PermissionDialog build(int styleRes, boolean buildAnyway) {
+    public RationaleDialog build(int styleRes, boolean buildAnyway) {
         ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
         boolean showSettings = showSettings(smoothPermissions, buildAnyway);
         if (smoothPermissions.size() > 0) {
-            return new PermissionDialog().initialise(smoothPermissions, permissionResolveListener, styleRes, showSettings, buildAnyway);
+            return new RationaleDialog().initialise(smoothPermissions, permissionResolveListener, styleRes, showSettings, buildAnyway);
         } else {
-            PermissionDialog.returnCallback(permissionResolveListener, smoothPermissions, buildAnyway);
+            RationaleDialog.returnCallback(permissionResolveListener, smoothPermissions, buildAnyway);
         }
         return null;
     }

@@ -13,7 +13,7 @@ import xyz.belvi.permissiondialog.Permission.SmoothPermission;
 public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBuilder.PermissionInit, RationaleBuilder.DialogStyle {
 
 
-    private PermissionDialogBuilder permissionDialogBuilder;
+    private RationaleDialogBuilder permissionDialogBuilder;
     private int styleRes;
 
     private Rationale(Activity activity) {
@@ -22,7 +22,7 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
 
 
     private void initialize(Activity activity) {
-        permissionDialogBuilder = new PermissionDialogBuilder(activity);
+        permissionDialogBuilder = new RationaleDialogBuilder(activity);
     }
 
     public static RationaleBuilder.PermissionInit withActivity(Activity activity) {
@@ -62,18 +62,20 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
     }
 
     @Override
-    public void setPermission(SmoothPermission... smoothPermission) {
+    public RationaleBuilder.PermissionInit setPermission(SmoothPermission... smoothPermission) {
         permissionDialogBuilder.setSmoothPermission(smoothPermission);
+        return this;
     }
 
     @Override
-    public void setPermission(ArrayList<SmoothPermission> smoothPermission) {
+    public RationaleBuilder.PermissionInit setPermission(ArrayList<SmoothPermission> smoothPermission) {
         permissionDialogBuilder.setSmoothPermission(smoothPermission);
+        return this;
     }
 
 
     @Override
-    public PermissionDialog build(boolean buildAnyway) {
+    public RationaleDialog build(boolean buildAnyway) {
         return permissionDialogBuilder.build(styleRes, buildAnyway);
     }
 

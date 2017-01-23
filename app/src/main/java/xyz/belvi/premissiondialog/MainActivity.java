@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import xyz.belvi.permissiondialog.Rationale.Rationale;
 import xyz.belvi.permissiondialog.Permission.PermissionDetails;
-import xyz.belvi.permissiondialog.Rationale.PermissionDialog;
+import xyz.belvi.permissiondialog.Rationale.RationaleDialog;
 import xyz.belvi.permissiondialog.Rationale.PermissionResolveListener;
 import xyz.belvi.permissiondialog.Permission.PermissionTracker;
 import xyz.belvi.permissiondialog.Permission.SmoothPermission;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         PermissionDetails internetPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.INTERNET, R.drawable.ic_sms_white_24dp);
 
 
-        PermissionDialog dialog = Rationale.withActivity(this)
+        RationaleDialog dialog = Rationale.withActivity(this)
                 .addSmoothPermission(new SmoothPermission(Manifest.permission.READ_SMS, smsPermissionDetails.getDescription(), smsPermissionDetails.getDescription(), smsPermissionDetails.getPermissionIcon()),
                         new SmoothPermission(Manifest.permission.READ_EXTERNAL_STORAGE, storagePermissionDetails.getDescription(), storagePermissionDetails.getDescription(), storagePermissionDetails.getPermissionIcon()),
                         new SmoothPermission(Manifest.permission.RECORD_AUDIO, audioPermissionDetails.getDescription(), audioPermissionDetails.getDescription(), audioPermissionDetails.getPermissionIcon()),
