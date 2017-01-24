@@ -1,10 +1,12 @@
 package xyz.belvi.permissiondialog.Rationale;
 
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
+import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -17,15 +19,20 @@ import xyz.belvi.permissiondialog.Permission.SmoothPermission;
  * Created by zone2 on 1/20/17.
  */
 
-class RationaleDialogBuilder {
+class RationaleDialogBuilder implements CallbackReceiver.Receiver {
 
     private static ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
-    private static Activity mActivity;
+    private static AppCompatActivity mActivity;
     private PermissionResolveListener permissionResolveListener;
+    private CallbackReceiver callbackReceiver;
 
-    public RationaleDialogBuilder(Activity activity) {
+
+    public RationaleDialogBuilder(AppCompatActivity activity) {
         mActivity = activity;
         smoothPermissions = new ArrayList<>();
+        callbackReceiver = new CallbackReceiver(new Handler());
+        callbackReceiver.setReceiver(this);
+
     }
 
     public RationaleDialogBuilder addSmoothPermission(SmoothPermission... smoothPermissions) {
@@ -59,15 +66,16 @@ class RationaleDialogBuilder {
     }
 
 
-    public RationaleDialog build(int styleRes, boolean buildAnyway) {
+    public void build(int styleRes, boolean buildAnyway) {
+//        RationaleBase.startTransperentBase(mActivity);
+//        mActivity.startActivity(new Intent(mActivity,RationaleBase.class));
         ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
         boolean showSettings = showSettings(smoothPermissions, buildAnyway);
         if (smoothPermissions.size() > 0) {
-            return new RationaleDialog().initialise(smoothPermissions, permissionResolveListener, styleRes, showSettings, buildAnyway);
+            new RationaleDialog().initialise(smoothPermissions, callbackReceiver, styleRes, showSettings, buildAnyway).show(mActivity.getSupportFragmentManager(), "");
         } else {
-            RationaleDialog.returnCallback(permissionResolveListener, smoothPermissions, buildAnyway);
+//            RationaleDialog.returnCallback(permissionResolveListener, smoothPermissions, buildAnyway);
         }
-        return null;
     }
 
 
@@ -116,5 +124,16 @@ class RationaleDialogBuilder {
     private static boolean isPermissionDenied(String permission) {
         return (ContextCompat.checkSelfPermission(mActivity, permission)
                 == PackageManager.PERMISSION_DENIED);
+    }
+
+
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        ArrayList<SmoothPermission> smoothPermissions = resultData.getParcelableArrayList(RationaleDialog.SMOOTH_PERMISSIONS);
+        if (resultCode == RationaleDialog.PERMISSION_RESOLVE) {
+            permissionResolveListener.onResolved(smoothPermissions);
+        } else {
+            permissionResolveListener.possiblePermissionUpdate(smoothPermissions);
+        }
     }
 }

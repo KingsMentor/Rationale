@@ -1,7 +1,5 @@
 package xyz.belvi.permissiondialog.Rationale;
 
-import android.app.Activity;
-
 import java.util.ArrayList;
 
 import xyz.belvi.permissiondialog.Permission.SmoothPermission;
@@ -9,8 +7,6 @@ import xyz.belvi.permissiondialog.Permission.SmoothPermission;
 public interface RationaleBuilder {
 
     interface PermissionInit {
-
-        PermissionInit init(Activity activity);
 
         PermissionInit addSmoothPermission(SmoothPermission... smoothPermission);
 
@@ -29,7 +25,7 @@ public interface RationaleBuilder {
     }
 
     interface PermissionBuild {
-        RationaleDialog build(boolean buildAnyway);
+        void build(boolean buildAnyway);
     }
 
 

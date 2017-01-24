@@ -1,6 +1,6 @@
 package xyz.belvi.permissiondialog.Rationale;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -16,26 +16,13 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
     private RationaleDialogBuilder permissionDialogBuilder;
     private int styleRes;
 
-    private Rationale(Activity activity) {
-        init(activity);
-    }
+    private Rationale(AppCompatActivity activity) {
 
-
-    private void initialize(Activity activity) {
         permissionDialogBuilder = new RationaleDialogBuilder(activity);
     }
-
-    public static RationaleBuilder.PermissionInit withActivity(Activity activity) {
+    public static RationaleBuilder.PermissionInit withActivity(AppCompatActivity activity) {
         return new Rationale(activity);
     }
-
-
-    @Override
-    public RationaleBuilder.PermissionInit init(Activity activity) {
-        initialize(activity);
-        return this;
-    }
-
     @Override
     public RationaleBuilder.PermissionInit addSmoothPermission(SmoothPermission... smoothPermission) {
         permissionDialogBuilder.addSmoothPermission(smoothPermission);
@@ -75,8 +62,8 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
 
 
     @Override
-    public RationaleDialog build(boolean buildAnyway) {
-        return permissionDialogBuilder.build(styleRes, buildAnyway);
+    public void build(boolean buildAnyway) {
+         permissionDialogBuilder.build(styleRes, buildAnyway);
     }
 
 

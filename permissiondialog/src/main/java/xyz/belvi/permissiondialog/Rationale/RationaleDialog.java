@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.os.ResultReceiver;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
@@ -40,23 +41,27 @@ public class RationaleDialog extends DialogFragment {
 
     private ViewPager rationalePager;
     private AppCompatButton noButton, yesButton;
-    private final String SMOOTH_PERMISSIONS = "com.appzonegroup.zone.displayMessage.SMOOTH_PERMISSIONS";
+    public static final String SMOOTH_PERMISSIONS = "com.appzonegroup.zone.displayMessage.SMOOTH_PERMISSIONS";
     private final String SHOW_SETTINGS = "com.appzonegroup.zone.displayMessage.SHOW_SETTINGS";
     private final String BUILD_ANYWAY = "com.appzonegroup.zone.displayMessage.BUILD_ANYWAY";
     private final String STYLE_RES = "com.appzonegroup.zone.displayMessage.STYLE_RES";
+    private final String RECEIVER = "com.appzonegroup.zone.displayMessage.RECEIVER";
     private PermissionRationalePager permissionRationalePager;
-    private static PermissionResolveListener permissionResolveListener;
+
+    public static final int POSSIBLE_UPDATE = 0;
+    public static final int PERMISSION_RESOLVE = 1;
 
 
-    public RationaleDialog initialise(ArrayList<SmoothPermission> smoothPermission, PermissionResolveListener resolveListener, int styleRes, boolean showSettings, boolean buildAnyway) {
+    public RationaleDialog initialise(ArrayList<SmoothPermission> smoothPermission, CallbackReceiver resolveListener, int styleRes, boolean showSettings, boolean buildAnyway) {
 
         Bundle argument = new Bundle();
         argument.putParcelableArrayList(SMOOTH_PERMISSIONS, smoothPermission);
         argument.putBoolean(SHOW_SETTINGS, showSettings);
         argument.putBoolean(BUILD_ANYWAY, buildAnyway);
         argument.putInt(STYLE_RES, styleRes);
+        argument.putParcelable(RECEIVER, resolveListener);
         setArguments(argument);
-        permissionResolveListener = resolveListener;
+
         return this;
     }
 
@@ -87,6 +92,10 @@ public class RationaleDialog extends DialogFragment {
 
     private int getStyleRes() {
         return getArguments().getInt(STYLE_RES, R.style.Beliv_RationaleStyle);
+    }
+
+    private ResultReceiver getCallbackReceiver() {
+        return getArguments().getParcelable(RECEIVER);
     }
 
     @Override
@@ -210,7 +219,7 @@ public class RationaleDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
                 dismissAllowingStateLoss();
-                returnCallback(permissionResolveListener, getSmoothPermissions(), buildAnyway());
+                returnCallback(false, getSmoothPermissions(), buildAnyway());
 
             }
         });
@@ -235,7 +244,7 @@ public class RationaleDialog extends DialogFragment {
                             loadPermissionPage(getContext());
                         } else {
                             dismissAllowingStateLoss();
-                            returnCallback(permissionResolveListener, getSmoothPermissions(), buildAnyway());
+                            returnCallback(false, getSmoothPermissions(), buildAnyway());
 
                         }
                     }
@@ -244,7 +253,7 @@ public class RationaleDialog extends DialogFragment {
                         loadPermissionPage(getContext());
                     } else {
                         dismissAllowingStateLoss();
-                        returnCallback(permissionResolveListener, getSmoothPermissions(), buildAnyway());
+                        returnCallback(false, getSmoothPermissions(), buildAnyway());
 
                     }
                 }
@@ -309,26 +318,20 @@ public class RationaleDialog extends DialogFragment {
         }
     }
 
-    public static void returnCallback(PermissionResolveListener permissionResolveListener, ArrayList<SmoothPermission> smoothPermissions, boolean buildAnyway) {
-        if (buildAnyway)
-            permissionResolveListener.onResolved(smoothPermissions);
-        else {
+    public void returnCallback(boolean isPossibleUpdate, ArrayList<SmoothPermission> smoothPermissions, boolean buildAnyway) {
+        if (!buildAnyway) {
             smoothPermissions = new ArrayList<>();
             RationaleDialogBuilder.showSettings(smoothPermissions, true);
-            permissionResolveListener.onResolved(smoothPermissions);
         }
+
+        getCallbackReceiver().send(isPossibleUpdate ? POSSIBLE_UPDATE : PERMISSION_RESOLVE, returnSmoothPermissions(smoothPermissions));
     }
 
-    public static void returnPossibleCallback(PermissionResolveListener permissionResolveListener, ArrayList<SmoothPermission> smoothPermissions, boolean buildAnyway) {
-        if (buildAnyway)
-            permissionResolveListener.possiblePermissionUpdate(smoothPermissions);
-        else {
-            smoothPermissions = new ArrayList<>();
-            RationaleDialogBuilder.showSettings(smoothPermissions, true);
-            permissionResolveListener.possiblePermissionUpdate(smoothPermissions);
-        }
+    private Bundle returnSmoothPermissions(ArrayList<SmoothPermission> smoothPermissions) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(SMOOTH_PERMISSIONS, smoothPermissions);
+        return bundle;
     }
-
 
     @Override
     public void onResume() {
@@ -348,7 +351,7 @@ public class RationaleDialog extends DialogFragment {
         if (smoothPermissions.size() == 0) {
             dismissAllowingStateLoss();
 
-            returnCallback(permissionResolveListener, getSmoothPermissions(), buildAnyway());
+            returnCallback(false, getSmoothPermissions(), buildAnyway());
 
             if (showSettings) {
                 yesButton.setText("Settings");
@@ -358,7 +361,7 @@ public class RationaleDialog extends DialogFragment {
             //call
         } else {
 
-            returnPossibleCallback(permissionResolveListener, getSmoothPermissions(), buildAnyway());
+            returnCallback(true, getSmoothPermissions(), buildAnyway());
             if (smoothPermissions.size() > 1) {
                 if (showSettings) {
                     yesButton.setText("Next");
