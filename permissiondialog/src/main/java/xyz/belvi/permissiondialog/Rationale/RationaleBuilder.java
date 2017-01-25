@@ -12,16 +12,12 @@ public interface RationaleBuilder {
 
         PermissionInit addSmoothPermission(ArrayList<SmoothPermission> smoothPermission);
 
-        DialogStyle includeStyle(int styleRes);
+        PermissionBuild includeStyle(int styleRes);
 
         PermissionInit setPermission(SmoothPermission... smoothPermission);
 
         PermissionInit setPermission(ArrayList<SmoothPermission> smoothPermission);
 
-    }
-
-    interface DialogStyle {
-        PermissionBuild withPermissionResolved(PermissionResolveListener resolveListener);
     }
 
     interface PermissionBuild {

@@ -6,7 +6,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
-        <activity android:name=".Rationale.RationaleBase" />
+        <activity
+            android:name=".Rationale.RationaleBase"
+            android:theme="@style/Beliv.Rationale" />
     </application>
 
 </manifest>

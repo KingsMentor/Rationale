@@ -10,7 +10,7 @@ import xyz.belvi.permissiondialog.Permission.SmoothPermission;
  * Created by zone2 on 1/20/17.
  */
 
-public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBuilder.PermissionInit, RationaleBuilder.DialogStyle {
+public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBuilder.PermissionInit {
 
 
     private RationaleDialogBuilder permissionDialogBuilder;
@@ -37,16 +37,12 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
 
 
     @Override
-    public RationaleBuilder.DialogStyle includeStyle(int styleRes) {
+    public RationaleBuilder.PermissionBuild includeStyle(int styleRes) {
         this.styleRes = styleRes;
         return this;
     }
 
-    @Override
-    public RationaleBuilder.PermissionBuild withPermissionResolved(PermissionResolveListener resolveListener) {
-        permissionDialogBuilder.resolvePermission(resolveListener);
-        return this;
-    }
+
 
     @Override
     public RationaleBuilder.PermissionInit setPermission(SmoothPermission... smoothPermission) {
