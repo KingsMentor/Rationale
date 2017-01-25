@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import xyz.belvi.permissiondialog.Permission.SmoothPermission;
 
+import static xyz.belvi.permissiondialog.Rationale.RationaleDialog.SMOOTH_PERMISSIONS;
+
 /**
  * Created by zone2 on 1/20/17.
  */
@@ -65,17 +67,39 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
         permissionDialogBuilder.build(styleRes, buildAnyway);
     }
 
-    public static boolean permissionResolved(Intent intent) {
-        return intent.getIntExtra(RationaleBase.RESULT_TYPE, RationaleDialog.NO_ACTION) == RationaleDialog.PERMISSION_RESOLVE;
+
+    public static Bundle bundleResponse(ArrayList<SmoothPermission> smoothPermissions, boolean userDecline) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SMOOTH_PERMISSIONS, new RationaleResponse(smoothPermissions, smoothPermissions.size() > 0 && !userDecline, userDecline));
+        return bundle;
     }
 
-    public static ArrayList<SmoothPermission> getSmoothPermission(Intent intent) {
-        if (permissionResolved(intent)) {
-            Bundle bundle = intent.getBundleExtra(RationaleBase.RESULT_DATA);
-            if (bundle != null) {
-                ArrayList<SmoothPermission> smoothPermissions = bundle.getParcelableArrayList(RationaleDialog.SMOOTH_PERMISSIONS);
-                return smoothPermissions;
-            }
+    public static boolean isResultFromRationale(int requestCode) {
+        return requestCode == RationaleBase.REQUEST_CODE;
+    }
+
+    public static boolean permissionResolved(Intent intent) {
+        return intent.getIntExtra(RationaleBase.RESULT_TYPE, -1) == RationaleDialog.PERMISSION_RESOLVE;
+    }
+
+    public static boolean noAction(Intent intent) {
+        return intent.getIntExtra(RationaleBase.RESULT_TYPE, -1) == RationaleDialog.NO_ACTION;
+    }
+
+    public static RationaleResponse getRationaleResponse(Intent intent) {
+        if (permissionResolved(intent) || noAction(intent)) {
+            RationaleResponse rationaleResponse = getResponse(intent);
+            if (rationaleResponse != null)
+                return rationaleResponse;
+        }
+        return null;
+    }
+
+    private static RationaleResponse getResponse(Intent intent) {
+        Bundle bundle = intent.getBundleExtra(RationaleBase.RESULT_DATA);
+        if (bundle != null) {
+            RationaleResponse rationaleResponse = bundle.getParcelable(SMOOTH_PERMISSIONS);
+            return rationaleResponse;
         }
         return null;
     }

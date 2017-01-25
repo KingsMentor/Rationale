@@ -225,8 +225,7 @@ public class RationaleDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
                 dismissAllowingStateLoss();
-                ((RationaleBase) getActivity()).onReceiveResult(NO_ACTION, null);
-
+                ((RationaleBase) getActivity()).onReceiveResult(NO_ACTION, Rationale.bundleResponse(getSmoothPermissions(), true));
             }
         });
 
@@ -328,14 +327,9 @@ public class RationaleDialog extends DialogFragment {
             ((RationaleBase) getActivity()).showSettings(smoothPermissions, true);
         }
 
-        ((RationaleBase) getActivity()).onReceiveResult(PERMISSION_RESOLVE, returnSmoothPermissions(smoothPermissions));
+        ((RationaleBase) getActivity()).onReceiveResult(PERMISSION_RESOLVE, Rationale.bundleResponse(smoothPermissions, false));
     }
 
-    private Bundle returnSmoothPermissions(ArrayList<SmoothPermission> smoothPermissions) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(SMOOTH_PERMISSIONS, smoothPermissions);
-        return bundle;
-    }
 
     @Override
     public void onResume() {

@@ -24,8 +24,10 @@ import xyz.belvi.permissiondialog.Permission.SmoothPermission;
 
 public class RationaleBase extends AppCompatActivity implements CallbackReceiver.Receiver {
 
-    public static final int REQUEST_CODE = 0;
-    private static final String EXTRAS = "EXTRAS";
+    public static final int REQUEST_CODE = 2017;
+    private static final String EXTRAS = "xyz.belvi.permissiondialog.Rationale.EXTRAS";
+    public static final String RESULT_DATA = "xyz.belvi.permissiondialog.Rationale.RESULT_DATA";
+    public static final String RESULT_TYPE = "xyz.belvi.permissiondialog.Rationale.RESULT_TYPE";
 
     public static void startTransparentBase(Activity context, ArrayList<SmoothPermission> smoothPermissions, int styleRes, boolean buildAnyway) {
         Intent rationaleIntent = new Intent(context, RationaleBase.class);
@@ -73,7 +75,7 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
             if (smoothPermissions.size() > 0) {
                 new RationaleDialog().initialise(smoothPermissions, styleRes(savedInstanceState), showSettings, buildAnyway(savedInstanceState)).show(getSupportFragmentManager(), "");
             } else {
-                onReceiveResult(RationaleDialog.PERMISSION_RESOLVE, new Bundle());
+                onReceiveResult(RationaleDialog.PERMISSION_RESOLVE, Rationale.bundleResponse(new ArrayList<SmoothPermission>(), false));
             }
         } else {
             mBundle = savedInstanceState;
@@ -129,22 +131,16 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
         outState.putBoolean(RationaleDialog.BUILD_ANYWAY, buildAnyway(getIntent().getBundleExtra(EXTRAS)));
     }
 
-    public static final String RESULT_DATA = "xyz.belvi.permissiondialog.Rationale.RESULT_DATA";
-    public static final String RESULT_TYPE = "xyz.belvi.permissiondialog.Rationale.RESULT_TYPE";
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        if (resultData != null) {
-            if (resultCode == RationaleDialog.PERMISSION_RESOLVE) {
-                setResult(resultCode, new Intent()
-                        .putExtra(RESULT_TYPE, resultCode)
-                        .putExtra(RESULT_DATA, resultData));
-                finish();
-            }
-        } else {
-            setResult(resultCode, new Intent().putExtra(RESULT_TYPE, resultCode));
+        if (resultCode == RationaleDialog.PERMISSION_RESOLVE || resultCode == RationaleDialog.NO_ACTION) {
+            setResult(REQUEST_CODE, new Intent()
+                    .putExtra(RESULT_TYPE, resultCode)
+                    .putExtra(RESULT_DATA, resultData));
             finish();
-        }
+        } else
+            finish();
     }
 
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.karumi.dexter.Dexter;
@@ -19,6 +18,7 @@ import xyz.belvi.permissiondialog.Permission.PermissionDetails;
 import xyz.belvi.permissiondialog.Permission.PermissionTracker;
 import xyz.belvi.permissiondialog.Permission.SmoothPermission;
 import xyz.belvi.permissiondialog.Rationale.Rationale;
+import xyz.belvi.permissiondialog.Rationale.RationaleResponse;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,35 +56,38 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.e("result", "here");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data != null) {
-            super.onActivityResult(requestCode, resultCode, data);
-            final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.RECORD_AUDIO, R.drawable.ic_sms_white_24dp);
+        if (Rationale.isResultFromRationale(requestCode)) {
+            RationaleResponse rationaleResponse = Rationale.getRationaleResponse(data);
+            if (rationaleResponse.isShouldRequestForPermissions()) {
+                super.onActivityResult(requestCode, resultCode, data);
+                final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.RECORD_AUDIO, R.drawable.ic_sms_white_24dp);
 
-            Dexter.withActivity(this).withPermission(smsPermissionDetails.getPermission())
-                    .withListener(new PermissionListener() {
-                        @Override
-                        public void onPermissionGranted(PermissionGrantedResponse response) {
+                Dexter.withActivity(this).withPermission(smsPermissionDetails.getPermission())
+                        .withListener(new PermissionListener() {
+                            @Override
+                            public void onPermissionGranted(PermissionGrantedResponse response) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onPermissionDenied(PermissionDeniedResponse response) {
+                            @Override
+                            public void onPermissionDenied(PermissionDeniedResponse response) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                            PermissionTracker.markPermission(MainActivity.this, permission.getName());
-                            token.continuePermissionRequest();
-                        }
-                    }).check();
+                            @Override
+                            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                                PermissionTracker.markPermission(MainActivity.this, permission.getName());
+                                token.continuePermissionRequest();
+                            }
+                        }).check();
+            }
         }
+
     }
 
 }
