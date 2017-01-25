@@ -9,7 +9,7 @@ import android.content.pm.PermissionInfo;
  */
 
 public class PermissionDetails {
-    private String description, permission;
+    private String description, permission, rationaleMessage, deniedMessage;
     private int drawableResId;
     private int protectionLevel;
 
@@ -28,6 +28,24 @@ public class PermissionDetails {
 
     public PermissionDetails setPermissionIcon(int drawable) {
         this.drawableResId = drawable;
+        return this;
+    }
+
+    public String getRationaleMessage() {
+        return this.rationaleMessage;
+    }
+
+    public PermissionDetails setRationaleMessage(String rationaleMessage) {
+        this.rationaleMessage = rationaleMessage;
+        return this;
+    }
+
+    public String getDeniedMessage() {
+        return this.deniedMessage;
+    }
+
+    public PermissionDetails setDeniedMessage(String deniedMessage) {
+        this.deniedMessage = deniedMessage;
         return this;
     }
 

@@ -19,6 +19,13 @@ public class SmoothPermission implements Parcelable {
         this.drawableRes = drawableResId;
     }
 
+    public SmoothPermission(PermissionDetails permissionDetails) {
+        this.permission = permission = permissionDetails.getPermission();
+        this.rationaleMessage = permissionDetails.getDescription();
+        this.deniedMessage = permissionDetails.getDescription();
+        this.drawableRes = permissionDetails.getPermissionIcon();
+    }
+
     protected SmoothPermission(Parcel in) {
         permission = in.readString();
         rationaleMessage = in.readString();
@@ -26,7 +33,6 @@ public class SmoothPermission implements Parcelable {
         drawableRes = in.readInt();
         state = PermissionState.valueOf(in.readString());
     }
-
 
 
     public PermissionState getState() {
