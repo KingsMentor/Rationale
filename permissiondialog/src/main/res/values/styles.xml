@@ -15,7 +15,7 @@
         <!-- Customize your theme here. -->
         <item name="bv_primary">@color/primary_color</item>
         <item name="bv_secondary">@color/secondary_color</item>
-        <item name="bv_rationale_state_visibility">false</item>
+        <item name="bv_rationale_state_visibility">true</item>
         <item name="bv_rationale_state_ignore_color">@color/ignore_state</item>
         <item name="bv_rationale_state_deny_color">@color/deny_state</item>
         <item name="bv_rationale_text_color_deny">@color/grey</item>

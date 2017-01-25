@@ -48,8 +48,10 @@ public class MainActivity extends AppCompatActivity {
         PermissionDetails internetPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.INTERNET, R.drawable.ic_sms_white_24dp);
 
         Rationale.withActivity(this)
-                .addSmoothPermission(new SmoothPermission(smsPermissionDetails.getPermission(), smsPermissionDetails.getDescription(), smsPermissionDetails.getDescription(), smsPermissionDetails.getPermissionIcon())
-                ).includeStyle(R.style.Beliv_RationaleStyle).build(true);
+                .addSmoothPermission(new SmoothPermission(smsPermissionDetails.getPermission(), smsPermissionDetails.getDescription(), smsPermissionDetails.getDescription(), smsPermissionDetails.getPermissionIcon()))
+                .addSmoothPermission(new SmoothPermission(storagePermissionDetails.getPermission(), storagePermissionDetails.getDescription(), storagePermissionDetails.getDescription(), storagePermissionDetails.getPermissionIcon()))
+                .addSmoothPermission(new SmoothPermission(audioPermissionDetails.getPermission(), audioPermissionDetails.getDescription(), audioPermissionDetails.getDescription(), audioPermissionDetails.getPermissionIcon()))
+                .includeStyle(R.style.Beliv_RationaleStyle).build(true);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
             super.onActivityResult(requestCode, resultCode, data);
-            final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.READ_SMS, R.drawable.ic_sms_white_24dp);
+            final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.RECORD_AUDIO, R.drawable.ic_sms_white_24dp);
 
             Dexter.withActivity(this).withPermission(smsPermissionDetails.getPermission())
                     .withListener(new PermissionListener() {

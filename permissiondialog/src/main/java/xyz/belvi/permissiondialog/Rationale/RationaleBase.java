@@ -73,6 +73,7 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
             if (smoothPermissions.size() > 0) {
                 new RationaleDialog().initialise(smoothPermissions, styleRes(savedInstanceState), showSettings, buildAnyway(savedInstanceState)).show(getSupportFragmentManager(), "");
             } else {
+                onReceiveResult(RationaleDialog.PERMISSION_RESOLVE, new Bundle());
 //            RationaleDialog.returnCallback(permissionResolveListener, smoothPermissions, buildAnyway);
             }
         } else {
@@ -132,10 +133,7 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         if (resultData != null) {
-            ArrayList<SmoothPermission> smoothPermissions = resultData.getParcelableArrayList(RationaleDialog.SMOOTH_PERMISSIONS);
             if (resultCode == RationaleDialog.PERMISSION_RESOLVE) {
-//            permissionResolveListener.onResolved(smoothPermissions);
-                Log.e("size", "" + smoothPermissions.size());
                 setResult(resultCode, new Intent().putExtra("data", resultData));
                 finish();
             }

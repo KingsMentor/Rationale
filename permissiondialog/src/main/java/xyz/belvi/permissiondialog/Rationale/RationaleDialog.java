@@ -367,7 +367,11 @@ public class RationaleDialog extends DialogFragment {
                 if (showSettings) {
                     yesButton.setText("Next");
                 } else {
-                    yesButton.setText("Continue");
+                    if (rationalePager.getCurrentItem() == 0) {
+                        yesButton.setText("Next");
+                    } else {
+                        yesButton.setText("Continue");
+                    }
                 }
             } else {
                 if (showSettings) {
