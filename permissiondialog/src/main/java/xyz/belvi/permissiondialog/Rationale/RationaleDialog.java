@@ -283,7 +283,6 @@ public class RationaleDialog extends DialogFragment {
 
 
     private void loadPermissionPage(Activity context) {
-//        waiting_for_permission = true;
         Intent intent = new Intent();
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         Uri uri = Uri.fromParts("package", context.getPackageName(), null);
@@ -342,16 +341,10 @@ public class RationaleDialog extends DialogFragment {
     public void onResume() {
         super.onResume();
 
-
         ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
 
         showSettings = ((RationaleBase) getActivity()).showSettings(smoothPermissions, buildAnyway());
         this.smoothPermissions = smoothPermissions;
-
-//        permissionRationalePager.setSmoothPermissions(smoothPermissions);
-//        permissionRationalePager.notifyDataSetChanged();
-//        rationalePager.setAdapter(permissionRationalePager);
-//        rationalePager.invalidate();
 
         if (smoothPermissions.size() == 0) {
             dismissAllowingStateLoss();
