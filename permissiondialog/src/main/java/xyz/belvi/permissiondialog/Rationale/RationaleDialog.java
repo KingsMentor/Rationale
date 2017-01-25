@@ -320,10 +320,6 @@ public class RationaleDialog extends DialogFragment {
         public int getCount() {
             return smoothPermissions.size();
         }
-
-        public void setSmoothPermissions(ArrayList<SmoothPermission> smoothPermissions) {
-            this.smoothPermissions = smoothPermissions;
-        }
     }
 
     public void returnCallback(ArrayList<SmoothPermission> smoothPermissions, boolean buildAnyway) {

@@ -74,7 +74,6 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
                 new RationaleDialog().initialise(smoothPermissions, styleRes(savedInstanceState), showSettings, buildAnyway(savedInstanceState)).show(getSupportFragmentManager(), "");
             } else {
                 onReceiveResult(RationaleDialog.PERMISSION_RESOLVE, new Bundle());
-//            RationaleDialog.returnCallback(permissionResolveListener, smoothPermissions, buildAnyway);
             }
         } else {
             mBundle = savedInstanceState;
@@ -130,14 +129,20 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
         outState.putBoolean(RationaleDialog.BUILD_ANYWAY, buildAnyway(getIntent().getBundleExtra(EXTRAS)));
     }
 
+    public static final String RESULT_DATA = "xyz.belvi.permissiondialog.Rationale.RESULT_DATA";
+    public static final String RESULT_TYPE = "xyz.belvi.permissiondialog.Rationale.RESULT_TYPE";
+
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         if (resultData != null) {
             if (resultCode == RationaleDialog.PERMISSION_RESOLVE) {
-                setResult(resultCode, new Intent().putExtra("data", resultData));
+                setResult(resultCode, new Intent()
+                        .putExtra(RESULT_TYPE, resultCode)
+                        .putExtra(RESULT_DATA, resultData));
                 finish();
             }
         } else {
+            setResult(resultCode, new Intent().putExtra(RESULT_TYPE, resultCode));
             finish();
         }
     }
