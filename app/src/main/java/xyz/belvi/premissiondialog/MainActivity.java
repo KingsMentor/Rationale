@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Rationale.isResultFromRationale(requestCode)) {
             RationaleResponse rationaleResponse = Rationale.getRationaleResponse(data);
-            if (rationaleResponse.isShouldRequestForPermissions()) {
+            if (rationaleResponse.shouldRequestForPermissions()) {
                 super.onActivityResult(requestCode, resultCode, data);
                 final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.RECORD_AUDIO, R.drawable.ic_sms_white_24dp);
 

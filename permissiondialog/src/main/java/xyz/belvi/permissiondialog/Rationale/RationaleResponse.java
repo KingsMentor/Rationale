@@ -43,28 +43,16 @@ public class RationaleResponse implements Parcelable {
         return this.smoothPermissions;
     }
 
-    public RationaleResponse setSmoothPermissions(ArrayList<SmoothPermission> smoothPermissions) {
-        this.smoothPermissions = smoothPermissions;
-        return this;
-    }
 
-    public boolean isShouldRequestForPermissions() {
+    public boolean shouldRequestForPermissions() {
         return this.shouldRequestForPermissions;
     }
 
-    public RationaleResponse setShouldRequestForPermissions(boolean shouldRequestForPermissions) {
-        this.shouldRequestForPermissions = shouldRequestForPermissions;
-        return this;
-    }
 
-    public boolean isUserDecline() {
+    public boolean userDecline() {
         return this.userDecline;
     }
 
-    public RationaleResponse setUserDecline(boolean userDecline) {
-        this.userDecline = userDecline;
-        return this;
-    }
 
     @Override
     public int describeContents() {
