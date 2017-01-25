@@ -1,6 +1,6 @@
 package xyz.belvi.permissiondialog.Rationale;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 
 import java.util.ArrayList;
 
@@ -13,11 +13,11 @@ import xyz.belvi.permissiondialog.Permission.SmoothPermission;
 class RationaleDialogBuilder {
 
     private ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
-    private AppCompatActivity mActivity;
+    private Activity mActivity;
     private PermissionResolveListener permissionResolveListener;
 
 
-    public RationaleDialogBuilder(AppCompatActivity activity) {
+    public RationaleDialogBuilder(Activity activity) {
         mActivity = activity;
         smoothPermissions = new ArrayList<>();
 

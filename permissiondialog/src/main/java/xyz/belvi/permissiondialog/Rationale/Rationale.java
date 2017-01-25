@@ -1,6 +1,6 @@
 package xyz.belvi.permissiondialog.Rationale;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 
 import java.util.ArrayList;
 
@@ -16,11 +16,11 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
     private RationaleDialogBuilder permissionDialogBuilder;
     private int styleRes;
 
-    private Rationale(AppCompatActivity activity) {
+    private Rationale(Activity activity) {
 
         permissionDialogBuilder = new RationaleDialogBuilder(activity);
     }
-    public static RationaleBuilder.PermissionInit withActivity(AppCompatActivity activity) {
+    public static RationaleBuilder.PermissionInit withActivity(Activity activity) {
         return new Rationale(activity);
     }
     @Override
