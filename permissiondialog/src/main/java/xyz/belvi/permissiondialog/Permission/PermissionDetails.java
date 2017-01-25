@@ -9,7 +9,7 @@ import android.content.pm.PermissionInfo;
  */
 
 public class PermissionDetails {
-    private String description, permission, rationaleMessage, deniedMessage;
+    private String description, permission, rationaleMessage = "", deniedMessage = "";
     private int drawableResId;
     private int protectionLevel;
 

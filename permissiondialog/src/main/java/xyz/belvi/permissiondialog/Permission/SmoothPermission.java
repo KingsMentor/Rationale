@@ -8,7 +8,7 @@ import android.os.Parcelable;
  */
 
 public class SmoothPermission implements Parcelable {
-    private String permission, rationaleMessage = "this is a sample", deniedMessage = "";
+    private String permission, rationaleMessage = "", deniedMessage = "";
     private int drawableRes;
     private PermissionState state = PermissionState.DENIED;
 
@@ -20,7 +20,7 @@ public class SmoothPermission implements Parcelable {
     }
 
     public SmoothPermission(PermissionDetails permissionDetails) {
-        this.permission = permission = permissionDetails.getPermission();
+        this.permission = permissionDetails.getPermission();
         this.rationaleMessage = permissionDetails.getDescription();
         this.deniedMessage = permissionDetails.getDescription();
         this.drawableRes = permissionDetails.getPermissionIcon();
