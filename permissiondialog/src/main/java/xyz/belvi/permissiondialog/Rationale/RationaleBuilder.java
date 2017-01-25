@@ -12,6 +12,8 @@ public interface RationaleBuilder {
 
         PermissionInit addSmoothPermission(ArrayList<SmoothPermission> smoothPermission);
 
+        PermissionInit requestCode(int requestCode);
+
         PermissionBuild includeStyle(int styleRes);
 
         PermissionInit setPermission(SmoothPermission... smoothPermission);

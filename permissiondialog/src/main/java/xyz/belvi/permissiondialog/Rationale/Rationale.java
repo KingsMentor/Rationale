@@ -19,7 +19,6 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
 
 
     private RationaleDialogBuilder permissionDialogBuilder;
-    private int styleRes;
 
     private Rationale(Activity activity) {
 
@@ -51,10 +50,16 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
         return this;
     }
 
+    @Override
+    public RationaleBuilder.PermissionInit requestCode(int requestCode) {
+        permissionDialogBuilder.requestCode(requestCode);
+        return this;
+    }
+
 
     @Override
     public RationaleBuilder.PermissionBuild includeStyle(int styleRes) {
-        this.styleRes = styleRes;
+        permissionDialogBuilder.includeStyle(styleRes);
         return this;
     }
 
@@ -74,7 +79,7 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
 
     @Override
     public void build(boolean buildAnyway) {
-        permissionDialogBuilder.build(styleRes, buildAnyway);
+        permissionDialogBuilder.build(buildAnyway);
     }
 
 

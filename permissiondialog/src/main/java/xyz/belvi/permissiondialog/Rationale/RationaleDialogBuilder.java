@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import java.util.ArrayList;
 
 import xyz.belvi.permissiondialog.Permission.SmoothPermission;
+import xyz.belvi.permissiondialog.R;
 
 /**
  * Created by zone2 on 1/20/17.
@@ -16,7 +17,8 @@ class RationaleDialogBuilder {
     private ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
     private Activity mActivity;
     private Fragment mFragment;
-    private PermissionResolveListener permissionResolveListener;
+    private int requestCode = 2017;
+    private int styleRes = R.style.Beliv_RationaleStyle;
 
 
     public RationaleDialogBuilder(Activity activity) {
@@ -33,6 +35,17 @@ class RationaleDialogBuilder {
 
     }
 
+
+    public RationaleDialogBuilder requestCode(int requestCode) {
+        this.requestCode = requestCode;
+        return this;
+    }
+
+    public RationaleDialogBuilder includeStyle(int styleRes) {
+        this.styleRes = styleRes;
+        return this;
+    }
+
     public RationaleDialogBuilder addSmoothPermission(SmoothPermission... smoothPermissions) {
         for (SmoothPermission smoothPermission : smoothPermissions) {
             this.smoothPermissions.add(smoothPermission);
@@ -47,10 +60,6 @@ class RationaleDialogBuilder {
         return this;
     }
 
-    public RationaleDialogBuilder resolvePermission(PermissionResolveListener permissionResolver) {
-        permissionResolveListener = permissionResolver;
-        return this;
-    }
 
     public void setSmoothPermission(SmoothPermission... smoothPermissions) {
         this.smoothPermissions = new ArrayList<>();
@@ -64,11 +73,11 @@ class RationaleDialogBuilder {
     }
 
 
-    public void build(int styleRes, boolean buildAnyway) {
+    public void build(boolean buildAnyway) {
         if (mActivity == null) {
-            RationaleBase.startTransparentBase(mFragment, smoothPermissions, styleRes, buildAnyway);
+            RationaleBase.startTransparentBase(mFragment, smoothPermissions, styleRes, requestCode, buildAnyway);
         } else {
-            RationaleBase.startTransparentBase(mActivity, smoothPermissions, styleRes, buildAnyway);
+            RationaleBase.startTransparentBase(mActivity, smoothPermissions, styleRes, requestCode, buildAnyway);
         }
     }
 

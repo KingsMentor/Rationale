@@ -25,29 +25,31 @@ import xyz.belvi.permissiondialog.Permission.SmoothPermission;
 
 public class RationaleBase extends AppCompatActivity implements CallbackReceiver.Receiver {
 
-    public static final int REQUEST_CODE = 2017;
+
     private static final String EXTRAS = "xyz.belvi.permissiondialog.Rationale.EXTRAS";
     public static final String RESULT_DATA = "xyz.belvi.permissiondialog.Rationale.RESULT_DATA";
     public static final String RESULT_TYPE = "xyz.belvi.permissiondialog.Rationale.RESULT_TYPE";
+    public static final String REQUEST_CODE = "xyz.belvi.permissiondialog.Rationale.REQUEST_CODE";
 
-    public static void startTransparentBase(Activity context, ArrayList<SmoothPermission> smoothPermissions, int styleRes, boolean buildAnyway) {
+    public static void startTransparentBase(Activity context, ArrayList<SmoothPermission> smoothPermissions, int styleRes, int requestCode, boolean buildAnyway) {
         Intent rationaleIntent = new Intent(context, RationaleBase.class);
-        initRationaleIntent(rationaleIntent, smoothPermissions, styleRes, buildAnyway);
-        context.startActivityForResult(rationaleIntent, REQUEST_CODE);
+        initRationaleIntent(rationaleIntent, smoothPermissions, styleRes, requestCode, buildAnyway);
+        context.startActivityForResult(rationaleIntent, requestCode);
     }
 
-    private static void initRationaleIntent(Intent rationaleIntent, ArrayList<SmoothPermission> smoothPermissions, int styleRes, boolean buildAnyway) {
+    private static void initRationaleIntent(Intent rationaleIntent, ArrayList<SmoothPermission> smoothPermissions, int styleRes, int requestCode, boolean buildAnyway) {
         Bundle argument = new Bundle();
         argument.putParcelableArrayList(RationaleDialog.SMOOTH_PERMISSIONS, smoothPermissions);
         argument.putInt(RationaleDialog.STYLE_RES, styleRes);
+        argument.putInt(REQUEST_CODE, requestCode);
         argument.putBoolean(RationaleDialog.BUILD_ANYWAY, buildAnyway);
         rationaleIntent.putExtra(EXTRAS, argument);
     }
 
-    public static void startTransparentBase(Fragment context, ArrayList<SmoothPermission> smoothPermissions, int styleRes, boolean buildAnyway) {
+    public static void startTransparentBase(Fragment context, ArrayList<SmoothPermission> smoothPermissions, int styleRes, int requestCode, boolean buildAnyway) {
         Intent rationaleIntent = new Intent(context.getContext(), RationaleBase.class);
-        initRationaleIntent(rationaleIntent, smoothPermissions, styleRes, buildAnyway);
-        context.startActivityForResult(rationaleIntent, REQUEST_CODE);
+        initRationaleIntent(rationaleIntent, smoothPermissions, styleRes, requestCode, buildAnyway);
+        context.startActivityForResult(rationaleIntent, requestCode);
     }
 
 
@@ -64,6 +66,10 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
 
     private int styleRes(Bundle bundle) {
         return bundle.getInt(RationaleDialog.STYLE_RES);
+    }
+
+    private int requestCode(Bundle bundle) {
+        return bundle.getInt(REQUEST_CODE);
     }
 
     private ArrayList<SmoothPermission> getSmoothPermissions(Bundle bundle) {
@@ -138,6 +144,7 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(RationaleDialog.SMOOTH_PERMISSIONS, getSmoothPermissions(getIntent().getBundleExtra(EXTRAS)));
         outState.putInt(RationaleDialog.STYLE_RES, styleRes(getIntent().getBundleExtra(EXTRAS)));
+        outState.putInt(REQUEST_CODE, requestCode(getIntent().getBundleExtra(EXTRAS)));
         outState.putBoolean(RationaleDialog.BUILD_ANYWAY, buildAnyway(getIntent().getBundleExtra(EXTRAS)));
     }
 
@@ -145,7 +152,7 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         if (resultCode == RationaleDialog.PERMISSION_RESOLVE || resultCode == RationaleDialog.NO_ACTION) {
-            setResult(REQUEST_CODE, new Intent()
+            setResult(requestCode(mBundle), new Intent()
                     .putExtra(RESULT_TYPE, resultCode)
                     .putExtra(RESULT_DATA, resultData));
             finish();
