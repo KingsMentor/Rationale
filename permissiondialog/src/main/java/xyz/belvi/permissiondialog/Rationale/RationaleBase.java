@@ -7,6 +7,7 @@ import android.content.pm.PermissionInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -31,12 +32,21 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
 
     public static void startTransparentBase(Activity context, ArrayList<SmoothPermission> smoothPermissions, int styleRes, boolean buildAnyway) {
         Intent rationaleIntent = new Intent(context, RationaleBase.class);
+        initRationaleIntent(rationaleIntent, smoothPermissions, styleRes, buildAnyway);
+        context.startActivityForResult(rationaleIntent, REQUEST_CODE);
+    }
+
+    private static void initRationaleIntent(Intent rationaleIntent, ArrayList<SmoothPermission> smoothPermissions, int styleRes, boolean buildAnyway) {
         Bundle argument = new Bundle();
         argument.putParcelableArrayList(RationaleDialog.SMOOTH_PERMISSIONS, smoothPermissions);
         argument.putInt(RationaleDialog.STYLE_RES, styleRes);
         argument.putBoolean(RationaleDialog.BUILD_ANYWAY, buildAnyway);
-
         rationaleIntent.putExtra(EXTRAS, argument);
+    }
+
+    public static void startTransparentBase(Fragment context, ArrayList<SmoothPermission> smoothPermissions, int styleRes, boolean buildAnyway) {
+        Intent rationaleIntent = new Intent(context.getContext(), RationaleBase.class);
+        initRationaleIntent(rationaleIntent, smoothPermissions, styleRes, buildAnyway);
         context.startActivityForResult(rationaleIntent, REQUEST_CODE);
     }
 

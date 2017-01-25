@@ -3,6 +3,7 @@ package xyz.belvi.permissiondialog.Rationale;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 
@@ -25,8 +26,17 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
         permissionDialogBuilder = new RationaleDialogBuilder(activity);
     }
 
+    private Rationale(Fragment fragment) {
+
+        permissionDialogBuilder = new RationaleDialogBuilder(fragment);
+    }
+
     public static RationaleBuilder.PermissionInit withActivity(Activity activity) {
         return new Rationale(activity);
+    }
+
+    public static RationaleBuilder.PermissionInit withFragment(Fragment fragment) {
+        return new Rationale(fragment);
     }
 
     @Override

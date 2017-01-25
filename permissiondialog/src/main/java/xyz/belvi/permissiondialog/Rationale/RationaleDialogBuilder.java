@@ -1,6 +1,7 @@
 package xyz.belvi.permissiondialog.Rationale;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 
@@ -14,11 +15,20 @@ class RationaleDialogBuilder {
 
     private ArrayList<SmoothPermission> smoothPermissions = new ArrayList<>();
     private Activity mActivity;
+    private Fragment mFragment;
     private PermissionResolveListener permissionResolveListener;
 
 
     public RationaleDialogBuilder(Activity activity) {
         mActivity = activity;
+        mFragment = null;
+        smoothPermissions = new ArrayList<>();
+
+    }
+
+    public RationaleDialogBuilder(Fragment fragment) {
+        mFragment = fragment;
+        mActivity = null;
         smoothPermissions = new ArrayList<>();
 
     }
@@ -55,11 +65,12 @@ class RationaleDialogBuilder {
 
 
     public void build(int styleRes, boolean buildAnyway) {
-        RationaleBase.startTransparentBase(mActivity, smoothPermissions, styleRes, buildAnyway);
+        if (mActivity == null) {
+            RationaleBase.startTransparentBase(mFragment, smoothPermissions, styleRes, buildAnyway);
+        } else {
+            RationaleBase.startTransparentBase(mActivity, smoothPermissions, styleRes, buildAnyway);
+        }
     }
-
-
-
 
 
 }
