@@ -43,14 +43,12 @@ public class MainActivity extends AppCompatActivity {
         final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.READ_SMS, R.drawable.ic_sms_white_24dp);
         PermissionDetails storagePermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.READ_EXTERNAL_STORAGE, R.drawable.ic_sms_white_24dp);
         PermissionDetails audioPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.RECORD_AUDIO, R.drawable.ic_sms_white_24dp);
-        PermissionDetails contactPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.WRITE_CONTACTS, R.drawable.ic_sms_white_24dp);
-        PermissionDetails locationPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.ACCESS_FINE_LOCATION, R.drawable.ic_sms_white_24dp);
-        PermissionDetails internetPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.INTERNET, R.drawable.ic_sms_white_24dp);
 
         Rationale.withActivity(this)
-                .addSmoothPermission(new SmoothPermission(smsPermissionDetails.getPermission(), smsPermissionDetails.getDescription(), smsPermissionDetails.getDescription(), smsPermissionDetails.getPermissionIcon()))
-                .addSmoothPermission(new SmoothPermission(storagePermissionDetails.getPermission(), storagePermissionDetails.getDescription(), storagePermissionDetails.getDescription(), storagePermissionDetails.getPermissionIcon()))
-                .addSmoothPermission(new SmoothPermission(audioPermissionDetails.getPermission(), audioPermissionDetails.getDescription(), audioPermissionDetails.getDescription(), audioPermissionDetails.getPermissionIcon()))
+                .requestCode(PERM)
+                .addSmoothPermission(new SmoothPermission(smsPermissionDetails))
+                .addSmoothPermission(new SmoothPermission(storagePermissionDetails))
+                .addSmoothPermission(new SmoothPermission(audioPermissionDetails))
                 .includeStyle(R.style.Beliv_RationaleStyle).build(true);
     }
 
@@ -59,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    private final int PERM = 2017;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (Rationale.isResultFromRationale(requestCode)) {
+        if (Rationale.isResultFromRationale(requestCode, PERM)) {
             RationaleResponse rationaleResponse = Rationale.getRationaleResponse(data);
             if (rationaleResponse.shouldRequestForPermissions()) {
                 super.onActivityResult(requestCode, resultCode, data);

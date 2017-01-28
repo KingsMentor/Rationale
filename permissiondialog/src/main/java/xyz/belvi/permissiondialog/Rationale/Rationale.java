@@ -89,8 +89,8 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
         return bundle;
     }
 
-    public static boolean isResultFromRationale(int requestCode) {
-        return requestCode == RationaleBase.REQUEST_CODE;
+    public static boolean isResultFromRationale(int requestCode, int expectedCode) {
+        return requestCode == expectedCode;
     }
 
     public static boolean permissionResolved(Intent intent) {
