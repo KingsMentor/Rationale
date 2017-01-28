@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -53,11 +54,16 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
     }
 
 
-    private boolean isDangerous(String permission) {
-        PermissionDetails permissionDetails = new PermissionDetails().getPermissionDetails(this, permission, -1);
-        boolean isDangerous = permissionDetails.getProtectionLevel() != PermissionInfo.PROTECTION_NORMAL;
-        return isDangerous;
+    private boolean needsPermissionRequest(String permission) {
 
+        PermissionDetails permissionDetails = new PermissionDetails().getPermissionDetails(this, permission, -1);
+        boolean needsPermissionRequest = permissionDetails.getProtectionLevel() != PermissionInfo.PROTECTION_NORMAL;
+        return needsPermissionRequest && deviceNeedsPermission();
+
+    }
+
+    private boolean deviceNeedsPermission() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
     private boolean buildAnyway(Bundle bundle) {
@@ -119,9 +125,10 @@ public class RationaleBase extends AppCompatActivity implements CallbackReceiver
 
     public boolean showSettings(ArrayList<SmoothPermission> sp, boolean buildAnyway) {
         boolean showSettings = false;
+
         Log.e("show size", "" + getSmoothPermissions(mBundle).size());
         for (SmoothPermission smoothPermission : getSmoothPermissions(mBundle)) {
-            if (isDangerous(smoothPermission.getPermission())) {
+            if (needsPermissionRequest(smoothPermission.getPermission())) {
                 if (isPermissionGranted(smoothPermission.getPermission())) {
                     smoothPermission.setState(PermissionState.GRANTED);
                     continue;
