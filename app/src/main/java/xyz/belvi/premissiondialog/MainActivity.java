@@ -62,18 +62,18 @@ public class MainActivity extends AppCompatActivity {
             if (rationaleResponse.shouldRequestForPermissions()) {
 //                Toast.makeText(this, "request permission from the user", Toast.LENGTH_LONG).show();
                 super.onActivityResult(requestCode, resultCode, data);
-                final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.RECORD_AUDIO, R.drawable.ic_sms_white_24dp);
+                final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.READ_SMS, R.drawable.ic_sms_white_24dp);
 
                 Dexter.withActivity(this).withPermission(smsPermissionDetails.getPermission())
                         .withListener(new PermissionListener() {
                             @Override
                             public void onPermissionGranted(PermissionGrantedResponse response) {
-
+                                Toast.makeText(MainActivity.this, "permission is granted", Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onPermissionDenied(PermissionDeniedResponse response) {
-
+                                Toast.makeText(MainActivity.this, "permission is denied", Toast.LENGTH_LONG).show();
                             }
 
                             @Override
