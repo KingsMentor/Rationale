@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -41,14 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void showPermDialog() {
         final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.READ_SMS, R.drawable.ic_sms_white_24dp);
-        PermissionDetails storagePermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.READ_EXTERNAL_STORAGE, R.drawable.ic_sms_white_24dp);
-        PermissionDetails audioPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.RECORD_AUDIO, R.drawable.ic_sms_white_24dp);
-
         Rationale.withActivity(this)
                 .requestCode(PERM)
                 .addSmoothPermission(new SmoothPermission(smsPermissionDetails))
-                .addSmoothPermission(new SmoothPermission(storagePermissionDetails))
-                .addSmoothPermission(new SmoothPermission(audioPermissionDetails))
                 .includeStyle(R.style.Beliv_RationaleStyle).build(true);
     }
 
@@ -64,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         if (Rationale.isResultFromRationale(requestCode, PERM)) {
             RationaleResponse rationaleResponse = Rationale.getRationaleResponse(data);
             if (rationaleResponse.shouldRequestForPermissions()) {
+//                Toast.makeText(this, "request permission from the user", Toast.LENGTH_LONG).show();
                 super.onActivityResult(requestCode, resultCode, data);
                 final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.RECORD_AUDIO, R.drawable.ic_sms_white_24dp);
 
@@ -85,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
                                 token.continuePermissionRequest();
                             }
                         }).check();
+            } else if (rationaleResponse.userDecline()) {
+                Toast.makeText(this, "user does not want to do this now", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "permission is accepted", Toast.LENGTH_LONG).show();
             }
         }
 
