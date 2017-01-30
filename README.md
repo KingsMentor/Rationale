@@ -71,7 +71,7 @@ Build permission with :
 - description - System Permission Description
 - protectionLevel - Protection level of permission
 
-### Response from Rationale.
+### Response from Rationale
 Rationale returns response via onActivityResult. Here is a snippet on handling response from Rationale.
 ``` java
 @Override
@@ -93,4 +93,25 @@ Rationale returns response via onActivityResult. Here is a snippet on handling r
     }
 ```
 
+### Styling Rationale
+Rationale dialog can be placing this in `styles.xml` changing the values to suite your need and including it when initialising Rationale with `includeStyle(styleRes)`
+```xml
+ <style name="Beliv.RationaleStyle" parent="Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="bv_primary">@color/primary_color</item>
+        <item name="bv_secondary">@color/secondary_color</item>
+        <item name="bv_rationale_state_visibility">true</item>
+        <item name="bv_rationale_state_ignore_color">@color/ignore_state</item>
+        <item name="bv_rationale_state_deny_color">@color/deny_state</item>
+        <item name="bv_rationale_text_color_deny">@color/grey</item>
+        <item name="bv_rationale_text_color_ignore">@color/ignore_state</item>
+        <item name="bv_card_corner_radius">@dimen/card_corner</item>
+        <item name="bv_rationale_text_size">@dimen/rationale_text_size</item>
+        <item name="bv_rationale_text_font">@string/rationale_font</item>
+
+    </style>
+```
+
+#License
+The MIT License (MIT). Please see the [License File](https://github.com/KingsMentor/MobileVisionBarcodeScanner/blob/master/license) for more information.
 
