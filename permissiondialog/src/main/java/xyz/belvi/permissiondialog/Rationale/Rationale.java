@@ -30,25 +30,49 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
         permissionDialogBuilder = new RationaleDialogBuilder(fragment);
     }
 
+    /**
+     * launching with a an activity
+     * @param activity - activity to return response via onActivityResult
+     */
     public static RationaleBuilder.PermissionInit withActivity(Activity activity) {
         return new Rationale(activity);
     }
 
+    /**
+     * launching with a fragment
+     * @param fragment - fragment to return response via onActivityResult
+     */
     public static RationaleBuilder.PermissionInit withFragment(Fragment fragment) {
         return new Rationale(fragment);
     }
 
+    /**
+     * add of permissions to run Rationale on
+     * @param smoothPermission - list of permission
+     * @return PermissionInit
+     */
     @Override
     public RationaleBuilder.PermissionInit addSmoothPermission(SmoothPermission... smoothPermission) {
         permissionDialogBuilder.addSmoothPermission(smoothPermission);
         return this;
     }
 
+    /**
+     * add of permissions to run Rationale on
+     * @param smoothPermission - arraylist of permission
+     * @return PermissionInit
+     */
     @Override
     public RationaleBuilder.PermissionInit addSmoothPermission(ArrayList<SmoothPermission> smoothPermission) {
         permissionDialogBuilder.addSmoothPermission(smoothPermission);
         return this;
     }
+
+    /**
+     * set request code to mark response from Rationale
+     * @param requestCode - request code to to start Rationale and return via onActivityResult
+     * @return PermissionInit
+     */
 
     @Override
     public RationaleBuilder.PermissionInit requestCode(int requestCode) {
@@ -56,6 +80,11 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
         return this;
     }
 
+    /**
+     * style the Rationale Dialog with @styleRes
+     * @param styleRes - styleRes id
+     * @return PermissionBuild
+     */
 
     @Override
     public RationaleBuilder.PermissionBuild includeStyle(int styleRes) {
@@ -63,19 +92,32 @@ public class Rationale implements RationaleBuilder.PermissionBuild, RationaleBui
         return this;
     }
 
-
+    /**
+     * set list of permissions to run Rationale on
+     * @param smoothPermission - list of permissions
+     * @return PermissionInit
+     */
     @Override
     public RationaleBuilder.PermissionInit setPermission(SmoothPermission... smoothPermission) {
         permissionDialogBuilder.setSmoothPermission(smoothPermission);
         return this;
     }
 
+    /**
+     * set list of permissions to run Rationale on
+     * @param smoothPermission - arraylist of permissions
+     * @return PermissionInit
+     */
     @Override
     public RationaleBuilder.PermissionInit setPermission(ArrayList<SmoothPermission> smoothPermission) {
         permissionDialogBuilder.setSmoothPermission(smoothPermission);
         return this;
     }
 
+    /**
+     *
+     * @param buildAnyway - true if the Rationale should show permissions that not not been permanently denied.
+     */
 
     @Override
     public void build(boolean buildAnyway) {

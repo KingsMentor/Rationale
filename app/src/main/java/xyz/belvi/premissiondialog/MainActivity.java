@@ -8,15 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
+import java.util.ArrayList;
 
 import xyz.belvi.permissiondialog.Permission.PermissionDetails;
-import xyz.belvi.permissiondialog.Permission.PermissionTracker;
 import xyz.belvi.permissiondialog.Permission.SmoothPermission;
 import xyz.belvi.permissiondialog.Rationale.Rationale;
 import xyz.belvi.permissiondialog.Rationale.RationaleResponse;
@@ -60,28 +54,10 @@ public class MainActivity extends AppCompatActivity {
         if (Rationale.isResultFromRationale(requestCode, PERM)) {
             RationaleResponse rationaleResponse = Rationale.getRationaleResponse(data);
             if (rationaleResponse.shouldRequestForPermissions()) {
-//                Toast.makeText(this, "request permission from the user", Toast.LENGTH_LONG).show();
-                super.onActivityResult(requestCode, resultCode, data);
-                final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.READ_SMS, R.drawable.ic_sms_white_24dp);
+                // a list of permission to be requested for
+                ArrayList<SmoothPermission> smoothPermissions = rationaleResponse.getSmoothPermissions();
 
-                Dexter.withActivity(this).withPermission(smsPermissionDetails.getPermission())
-                        .withListener(new PermissionListener() {
-                            @Override
-                            public void onPermissionGranted(PermissionGrantedResponse response) {
-                                Toast.makeText(MainActivity.this, "permission is granted", Toast.LENGTH_LONG).show();
-                            }
-
-                            @Override
-                            public void onPermissionDenied(PermissionDeniedResponse response) {
-                                Toast.makeText(MainActivity.this, "permission is denied", Toast.LENGTH_LONG).show();
-                            }
-
-                            @Override
-                            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                                PermissionTracker.markPermission(MainActivity.this, permission.getName());
-                                token.continuePermissionRequest();
-                            }
-                        }).check();
+                // request for permissions
             } else if (rationaleResponse.userDecline()) {
                 Toast.makeText(this, "user does not want to do this now", Toast.LENGTH_LONG).show();
             } else {
