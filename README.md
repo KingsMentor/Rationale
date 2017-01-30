@@ -60,7 +60,9 @@ final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermis
 - includeStyle - styling the Rationale Dialog. more details on styling is found below
 - SmoothPermissions - List of Permission to run Rationale Dialog on
 - build - takes `true` for Rationale Dialog to show Permission that has not been granted. `false` to only show rationale for permission permanently denied.
+
 ##### PermissionDetails
+
 Build permission with :
 - Permission name
 - Permission Icon
@@ -68,4 +70,27 @@ Build permission with :
 - deniedMessage - message to display when Permission is permanently denied by the user
 - description - System Permission Description
 - protectionLevel - Protection level of permission
+
+### Response from Rationale.
+Rationale returns response via onActivityResult. Here is a snippet on handling response from Rationale.
+``` java
+@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (Rationale.isResultFromRationale(requestCode, PERM)) {
+            RationaleResponse rationaleResponse = Rationale.getRationaleResponse(data);
+            if (rationaleResponse.shouldRequestForPermissions()) {
+                // a list of permission to be requested for
+                ArrayList<SmoothPermission> smoothPermissions = rationaleResponse.getSmoothPermissions();
+
+                // request for permissions
+            } else if (rationaleResponse.userDecline()) {
+                Toast.makeText(this, "user does not want to do this now", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "permission is accepted", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+```
+
 
