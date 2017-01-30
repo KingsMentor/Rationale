@@ -26,3 +26,22 @@ dependencies {
     }
 ```
 # Using Rationale
+
+**Using in an Activity**
+
+```java
+private final int PERM = 2017;
+
+final PermissionDetails smsPermissionDetails = new PermissionDetails().getPermissionDetails(this, Manifest.permission.READ_SMS, R.drawable.ic_sms_white_24dp);
+        Rationale.withActivity(this)
+                .requestCode(PERM)
+                .addSmoothPermission(new SmoothPermission(smsPermissionDetails))
+                .includeStyle(R.style.Beliv_RationaleStyle).build(true);
+```
+**Using in a Fragment***
+```java
+        Rationale.withFragment(this)
+                .requestCode(PERM)
+                .addSmoothPermission(new SmoothPermission(smsPermissionDetails))
+                .includeStyle(R.style.Beliv_RationaleStyle).build(true);
+```
