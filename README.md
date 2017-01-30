@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/KingsMentor/Rationale.svg)](https://jitpack.io/#KingsMentor/Rationale)
+[![](https://jitpack.io/v/KingsMentor/Rationale.svg)](https://jitpack.io/#KingsMentor/Rationale) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Rationale-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5189)
 # Rationale
 Android permission Rationale Helper.
 Similar to WhatsApp Permission Rationale Dialog that manages permission request .
